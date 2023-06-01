@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -109,9 +110,16 @@ public class MainActivity extends AppCompatActivity {
 
                         String opcao = relacao >= 70 ? "gasolina" : "etanol";
 
-                        String mensagem = String.format("Preços no posto '%s'. Etanol R$%.2f - Gasoline R$%.2f. Melhor usar '%s', relação %.0f%%", nomePostoStr, valorEtanol, valorGas, opcao, relacao);
 
-                       Toast.makeText(MainActivity.this, mensagem, Toast.LENGTH_LONG).show();
+                        String mensagem = String.format("Preços no posto '%s'. Etanol R$%.2f - Gasolina R$%.2f. Melhor usar '%s', relação %.0f%%", nomePostoStr, valorEtanol, valorGas, opcao, relacao);
+
+                        Intent intentMensagem = new Intent();
+                        intentMensagem.setAction(Intent.ACTION_SEND);
+                        intentMensagem.putExtra(Intent.EXTRA_TEXT, mensagem);
+                        intentMensagem.setType("text/plain");
+
+                        Intent chooserIntent = Intent.createChooser(intentMensagem, "");
+                        startActivity(chooserIntent);
                     }
                 });
                 buider.setNegativeButton("Cancelar", null);
